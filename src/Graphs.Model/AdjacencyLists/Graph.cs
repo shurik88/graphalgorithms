@@ -16,9 +16,37 @@ namespace Graphs.Model.AdjacencyLists
             _edges = new Dictionary<int, AdjacencyEdge>();
         }
 
+        /// <inheritdoc/>
         public EdgeDirectionType DirectionType { get; }
 
+        public IEnumerable<KeyValuePair<int, int>> GetClosestPaths(Vertex start)
+        {
+            if (!_vertices.ContainsKey(start.Id))
+                throw new ArgumentException("Vertex not exists");
 
+            var visitedVertices = new HashSet<int>();
+            var paths = _vertices.ToDictionary(x => x.Key, x => 0);
+            var queue = new Queue<Vertex>();
+            queue.Enqueue(start);
+            while (queue.Any())
+            {
+                var current = queue.Dequeue();
+                if (visitedVertices.Contains(current.Id))
+                    continue;
+                visitedVertices.Add(current.Id);
+                yield return new KeyValuePair<int, int>(current.Id, paths[current.Id]);
+                foreach (var outEdge in _vertices[current.Id].OutComming)
+                {
+                    queue.Enqueue(outEdge.To.Vertex);
+                    if(paths[outEdge.To.Vertex.Id] == 0)
+                        paths[outEdge.To.Vertex.Id] = paths[current.Id] + 1;
+                }
+
+            }
+
+        }
+
+        /// <inheritdoc/>
         public IEnumerable<Vertex> BreadthFirstSearch(Vertex start)
         {
             if(!_vertices.ContainsKey(start.Id))
@@ -39,6 +67,7 @@ namespace Graphs.Model.AdjacencyLists
             }
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Vertex> DeepthFirstSearch(Vertex start)
         {
             if (!_vertices.ContainsKey(start.Id))
@@ -78,6 +107,9 @@ namespace Graphs.Model.AdjacencyLists
 
             if (!_vertices.ContainsKey(to.Id))
                 throw new ArgumentException("To vertex not exists");
+
+            if (DirectionType == EdgeDirectionType.Undirected && edge.DirectionType == EdgeDirectionType.Directed)
+                throw new InvalidOperationException("Current undirected graph doesn't support directed edges");
 
             _edges.Add(edge.Id, ConnectVerticesInternal(from, to, edge));
             if (edge.DirectionType == EdgeDirectionType.Undirected)

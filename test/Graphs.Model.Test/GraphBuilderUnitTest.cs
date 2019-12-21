@@ -10,7 +10,7 @@ namespace Graphs.Model.Test
         [TestMethod]
         public void AdjacencyListsBuilder()
         {
-            TestGraphBuilder(new AdjacencyLists.Graph());       
+            TestGraphBuilder(new AdjacencyLists.Graph(EdgeDirectionType.Directed));       
         }
 
         private void TestGraphBuilder(IGraphBuilder graph)

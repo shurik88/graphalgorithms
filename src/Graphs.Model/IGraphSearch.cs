@@ -15,6 +15,13 @@ namespace Graphs.Model
         IEnumerable<Vertex> BreadthFirstSearch(Vertex start);
 
         /// <summary>
+        /// Поиск кратчайших путей (вес ребра равен 1) от <see cref=""/> до всех остальных
+        /// </summary>
+        /// <param name="start">Стартовая вершина</param>
+        /// <returns>Набор пар:ключ - идентификатор вершины, значение - длина пути</returns>
+        IEnumerable<KeyValuePair<int, int>> GetClosestPaths(Vertex start);
+
+        /// <summary>
         /// Поиск в глубину
         /// </summary>
         /// <param name="start">Стартовая вершина</param>

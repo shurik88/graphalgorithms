@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Graphs.Algorithms.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
@@ -10,15 +11,58 @@ namespace Graphs.Model.Test
         [TestMethod]
         public void AdjacencyGraphBreadthFirstSearchTest()
         {
-            var graph = new AdjacencyLists.Graph();
+            var graph = new AdjacencyLists.Graph(EdgeDirectionType.Directed);
             BreadthFirstSearch(graph);
         }
 
         [TestMethod]
         public void AdjacencyGraphDeepthFirstSearchTest()
         {
-            var graph = new AdjacencyLists.Graph();
+            var graph = new AdjacencyLists.Graph(EdgeDirectionType.Directed);
             DeepthFirstSearch(graph);
+        }
+
+        [TestMethod]
+        public void AdjacencyGraphPathExistsTest()
+        {
+            var graph = new AdjacencyLists.Graph(EdgeDirectionType.Directed);
+            PathExists(graph);
+        }
+
+        [TestMethod]
+        public void AdjacencyGraphClosePathsTest()
+        {
+            var graph = new AdjacencyLists.Graph(EdgeDirectionType.Directed);
+            ClosestPaths(graph);
+        }
+
+        private static void ClosestPaths(IGraph graph)
+        {
+            BuildGraph1(graph);
+
+            var paths = graph.GetClosestPaths(new Vertex { Id = 1 }).ToDictionary(x => x.Key, x => x.Value);
+
+            Assert.AreEqual(0, paths[1], "path legth from 1 to 1");
+            Assert.AreEqual(1, paths[2], "path legth from 1 to 2");
+            Assert.AreEqual(1, paths[3], "path legth from 1 to 3");
+            Assert.AreEqual(1, paths[4], "path legth from 1 to 4");
+            Assert.AreEqual(1, paths[5], "path legth from 1 to 5");
+            Assert.AreEqual(2, paths[6], "path legth from 1 to 6");
+            Assert.AreEqual(2, paths[7], "path legth from 1 to 7");
+            Assert.AreEqual(2, paths[8], "path legth from 1 to 8");
+            Assert.AreEqual(2, paths[9], "path legth from 1 to 9");
+            Assert.AreEqual(3, paths[10], "path legth from 1 to 10");
+            Assert.AreEqual(3, paths[11], "path legth from 1 to 11");
+        }
+
+        private static void PathExists(IGraph graph)
+        {
+            BuildGraph1(graph);
+
+            Assert.IsTrue(graph.PathExists(new Vertex { Id = 1 }, new Vertex { Id = 5 }), "path from 1 to 5");
+            Assert.IsTrue(graph.PathExists(new Vertex { Id = 8 }, new Vertex { Id = 7 }), "path from 8 to 7");
+            Assert.IsTrue(graph.PathExists(new Vertex { Id = 3 }, new Vertex { Id = 1 }), "path from 3 to 1");
+            Assert.IsFalse(graph.PathExists(new Vertex { Id = 11 }, new Vertex { Id = 10 }), "path from 11 to 10");
         }
 
         private static void BuildGraph1(IGraph graph)

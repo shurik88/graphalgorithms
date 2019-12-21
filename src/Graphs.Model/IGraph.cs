@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Graphs.Model
+﻿namespace Graphs.Model
 {
     public interface IGraph : IGraphBuilder, IGraphSearch
     {
+        /// <summary>
+        /// Ориентация графа
+        /// </summary>
+        EdgeDirectionType DirectionType { get; }
     }
 }
