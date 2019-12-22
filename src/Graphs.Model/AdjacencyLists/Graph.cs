@@ -23,6 +23,15 @@ namespace Graphs.Model.AdjacencyLists
         public EdgeDirectionType DirectionType { get; }
 
         /// <inheritdoc/>
+        public IEnumerable<(Edge Edge, Vertex Vertex)> GetOutComming(Vertex vertex)
+        {
+            if (!_vertices.ContainsKey(vertex.Id))
+                throw new ArgumentException("Vertex not exists");
+
+            return _vertices[vertex.Id].OutComming.Select(x => (x.Edge, x.To.Vertex));
+        }
+
+        /// <inheritdoc/>
         public IEnumerable<Vertex> GetOutCommingVertices(Vertex vertex)
         {
             if (!_vertices.ContainsKey(vertex.Id))
@@ -65,7 +74,42 @@ namespace Graphs.Model.AdjacencyLists
                 }
 
             }
+        }
 
+        /// <inheritdoc/>
+        public IEnumerable<KeyValuePair<int, int>> GetClosestPathsByWeight(Vertex start)
+        {
+            if (!_vertices.ContainsKey(start.Id))
+                throw new ArgumentException("Vertex not exists");
+
+            yield return new KeyValuePair<int, int>(start.Id, 0);
+
+            var visited = new Dictionary<int, int> { [start.Id] = 0 };
+            var currPaths = new Dictionary<int, (int Weight, Vertex From, Vertex To)>();
+            var currVertex = start;
+            do
+            {
+                foreach(var outEdge in GetOutComming(currVertex).Where(x => !visited.ContainsKey(x.Vertex.Id)))
+                {
+                    if (!currPaths.ContainsKey(outEdge.Vertex.Id))
+                        currPaths.Add(outEdge.Vertex.Id, (outEdge.Edge.Weight + visited[currVertex.Id], currVertex, outEdge.Vertex));
+                    else if (currPaths[outEdge.Vertex.Id].Weight > outEdge.Edge.Weight + visited[currVertex.Id])
+                        currPaths[outEdge.Vertex.Id] = (outEdge.Edge.Weight + visited[currVertex.Id], currVertex, outEdge.Vertex);
+                }
+                if (!currPaths.Any())
+                    break;
+
+                var minElem = currPaths.First().Value;
+                foreach (var keyValue in currPaths)
+                    if (keyValue.Value.Weight < minElem.Weight)
+                        minElem = keyValue.Value;
+
+                yield return new KeyValuePair<int, int>(minElem.To.Id, minElem.Weight);
+                visited.Add(minElem.To.Id, minElem.Weight);
+                currPaths.Remove(minElem.To.Id);
+                currVertex = minElem.To;
+            }
+            while (currPaths.Any());
         }
 
         /// <inheritdoc/>

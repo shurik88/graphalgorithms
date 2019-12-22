@@ -23,5 +23,12 @@ namespace Graphs.Model
         /// <returns>Вершины</returns>
         IEnumerable<Vertex> GetInCommingVertices(Vertex vertex);
 
+        /// <summary>
+        /// Получение списка соседних вершин, в которые исходят ребра из <paramref name="vertex"/>
+        /// </summary>
+        /// <param name="vertex">Вершина</param>
+        /// <returns>Вершины и ребра</returns>
+        IEnumerable<(Edge Edge, Vertex Vertex)> GetOutComming(Vertex vertex);
+
     }
 }

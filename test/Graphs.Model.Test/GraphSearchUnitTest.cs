@@ -36,6 +36,13 @@ namespace Graphs.Model.Test
             ClosestPaths(graph);
         }
 
+        [TestMethod]
+        public void AdjacencyGraphClosePathsTestByWeight()
+        {
+            var graph = new AdjacencyLists.Graph(EdgeDirectionType.Directed);
+            ClosestPathsByWeight(graph);
+        }
+
         private static void ClosestPaths(IGraph graph)
         {
             BuildGraph1(graph);
@@ -53,6 +60,20 @@ namespace Graphs.Model.Test
             Assert.AreEqual(2, paths[9], "path legth from 1 to 9");
             Assert.AreEqual(3, paths[10], "path legth from 1 to 10");
             Assert.AreEqual(3, paths[11], "path legth from 1 to 11");
+        }
+
+        private static void ClosestPathsByWeight(IGraph graph)
+        {
+            BuildGraph2(graph);
+
+            var paths = graph.GetClosestPathsByWeight(new Vertex { Id = 1 }).ToDictionary(x => x.Key, x => x.Value);
+
+            Assert.AreEqual(0, paths[1], "path legth from 1 to 1");
+            Assert.AreEqual(2, paths[2], "path legth from 1 to 2");
+            Assert.AreEqual(3, paths[4], "path legth from 1 to 4");
+            Assert.AreEqual(4, paths[6], "path legth from 1 to 6");
+            Assert.AreEqual(4, paths[5], "path legth from 1 to 5");
+            Assert.AreEqual(5, paths[3], "path legth from 1 to 3");
         }
 
         private static void PathExists(IGraph graph)
@@ -94,6 +115,27 @@ namespace Graphs.Model.Test
             graph.AddEdge(4, 8, edgeId.Next);
             graph.AddEdge(3, 7, edgeId.Next, EdgeDirectionType.Directed);
             graph.AddEdge(7, 8, edgeId.Next, EdgeDirectionType.Directed);
+        }
+
+        private static void BuildGraph2(IGraph graph)
+        {
+            //var vertextId = new IntIdGenerator();
+            graph.AddVertex(1);
+            graph.AddVertex(2);
+            graph.AddVertex(3);
+            graph.AddVertex(4);
+            graph.AddVertex(5);
+            graph.AddVertex(6);
+
+            var edgeId = new IntIdGenerator();
+            graph.AddEdge(1, 2, edgeId.Next, 2);
+            graph.AddEdge(1, 4, edgeId.Next, 4);
+            graph.AddEdge(1, 5, edgeId.Next, 5);
+            graph.AddEdge(1, 6, edgeId.Next, 4);
+            graph.AddEdge(2, 4, edgeId.Next, 1);
+            graph.AddEdge(2, 5, edgeId.Next, 2);
+            graph.AddEdge(2, 3, edgeId.Next, 4);
+            graph.AddEdge(6, 3, edgeId.Next, 1);
         }
 
         private static void BreadthFirstSearch(IGraph graph)

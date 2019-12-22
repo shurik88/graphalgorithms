@@ -22,6 +22,14 @@ namespace Graphs.Model
         IEnumerable<KeyValuePair<int, int>> GetClosestPaths(Vertex start);
 
         /// <summary>
+        /// Поиск кратчайших путей (учитывается вес ребра) от <see cref=""/> до всех остальных
+        /// Алгоритм Дейкстры
+        /// </summary>
+        /// <param name="start">Стартовая вершина</param>
+        /// <returns>Набор пар:ключ - идентификатор вершины, значение - длина пути</returns>
+        IEnumerable<KeyValuePair<int, int>> GetClosestPathsByWeight(Vertex start);
+
+        /// <summary>
         /// Поиск в глубину
         /// </summary>
         /// <param name="start">Стартовая вершина</param>
