@@ -9,7 +9,7 @@
 
         public static void RemoveVertex(this IGraphBuilder graph, int vertex)
         {
-            graph.RemoveVertex(new Vertex { Id = vertex } );
+            graph.RemoveVertex(new Vertex { Id = vertex });
         }
 
         public static void AddVertex(this IGraphBuilder graph, int vertex)

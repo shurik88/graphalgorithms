@@ -8,6 +8,11 @@ namespace Graphs.Model
     public interface IGraphBuilder
     {
         /// <summary>
+        /// Удалить все вершины и ребра
+        /// </summary>
+        void Clear();
+
+        /// <summary>
         /// Вершины
         /// </summary>
         IEnumerable<Vertex> Vertices { get; }

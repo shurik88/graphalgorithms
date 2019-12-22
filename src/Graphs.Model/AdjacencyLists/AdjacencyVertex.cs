@@ -8,6 +8,9 @@ namespace Graphs.Model.AdjacencyLists
     /// </summary>
     internal class AdjacencyVertex
     {
+        /// <summary>
+        /// Создание экземпляра класса <see cref="AdjacencyVertex"/>
+        /// </summary>
         public AdjacencyVertex()
         {
             InComming = new Collection<AdjacencyEdge>();

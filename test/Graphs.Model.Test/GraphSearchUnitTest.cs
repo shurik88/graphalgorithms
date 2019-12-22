@@ -103,8 +103,8 @@ namespace Graphs.Model.Test
             Assert.ThrowsException<ArgumentException>(() => graph.BreadthFirstSearch(new Vertex { Id = -1 }).ToList(), "unknown vertex");
 
             var pathFrom1 = graph.BreadthFirstSearch(new Vertex { Id = 1 }).ToList();
-            Assert.IsTrue(pathFrom1.Select(x => x.Id).Distinct().Count() == pathFrom1.Count(), "unique vertex ids from 1");
-            Assert.AreEqual(graph.Vertices.Count(), pathFrom1.Count(), "all vertices found from 1");
+            Assert.IsTrue(pathFrom1.Select(x => x.Id).Distinct().Count() == pathFrom1.Count, "unique vertex ids from 1");
+            Assert.AreEqual(graph.Vertices.Count(), pathFrom1.Count, "all vertices found from 1");
 
             var i = 0;
             Assert.AreEqual(1, pathFrom1[i].Id, $"path elem number {i++}");
@@ -121,8 +121,8 @@ namespace Graphs.Model.Test
 
 
             var pathFrom5 = graph.BreadthFirstSearch(new Vertex { Id = 5 }).ToList();
-            Assert.IsTrue(pathFrom5.Select(x => x.Id).Distinct().Count() == pathFrom5.Count(), "unique vertex ids from 5");
-            Assert.AreEqual(graph.Vertices.Count(), pathFrom5.Count(), "all vertices found from 5");
+            Assert.IsTrue(pathFrom5.Select(x => x.Id).Distinct().Count() == pathFrom5.Count, "unique vertex ids from 5");
+            Assert.AreEqual(graph.Vertices.Count(), pathFrom5.Count, "all vertices found from 5");
 
             i = 0;
             Assert.AreEqual(5, pathFrom5[i].Id, $"path elem number {i++}");
@@ -138,8 +138,8 @@ namespace Graphs.Model.Test
             Assert.AreEqual(7, pathFrom5[i].Id, $"path elem number {i++}");
 
             var pathFrom10 = graph.BreadthFirstSearch(new Vertex { Id = 10 }).ToList();
-            Assert.IsTrue(pathFrom10.Select(x => x.Id).Distinct().Count() == pathFrom10.Count(), "unique vertex ids from 10");
-            Assert.AreEqual(graph.Vertices.Count(), pathFrom10.Count(), "all vertices found from 10");
+            Assert.IsTrue(pathFrom10.Select(x => x.Id).Distinct().Count() == pathFrom10.Count, "unique vertex ids from 10");
+            Assert.AreEqual(graph.Vertices.Count(), pathFrom10.Count, "all vertices found from 10");
 
             i = 0;
             Assert.AreEqual(10, pathFrom10[i].Id, $"path elem number {i++}");
@@ -155,7 +155,7 @@ namespace Graphs.Model.Test
             Assert.AreEqual(7, pathFrom10[i].Id, $"path elem number {i++}");
 
             var pathFrom11 = graph.BreadthFirstSearch(new Vertex { Id = 11 }).ToList();
-            Assert.AreEqual(1, pathFrom11.Count(), "one vertex found from 11");
+            Assert.AreEqual(1, pathFrom11.Count, "one vertex found from 11");
 
         }
 
@@ -166,8 +166,8 @@ namespace Graphs.Model.Test
             Assert.ThrowsException<ArgumentException>(() => graph.DeepthFirstSearch(new Vertex { Id = -1 }).ToList(), "unknown vertex");
 
             var pathFrom1 = graph.DeepthFirstSearch(new Vertex { Id = 1 }).ToList();
-            Assert.IsTrue(pathFrom1.Select(x => x.Id).Distinct().Count() == pathFrom1.Count(), "unique vertex ids from 1");
-            Assert.AreEqual(graph.Vertices.Count(), pathFrom1.Count(), "all vertices found from 1");
+            Assert.IsTrue(pathFrom1.Select(x => x.Id).Distinct().Count() == pathFrom1.Count, "unique vertex ids from 1");
+            Assert.AreEqual(graph.Vertices.Count(), pathFrom1.Count, "all vertices found from 1");
 
             var i = 0;
             Assert.AreEqual(1, pathFrom1[i].Id, $"path elem number {i++} from 1");
@@ -184,8 +184,8 @@ namespace Graphs.Model.Test
 
 
             var pathFrom5 = graph.DeepthFirstSearch(new Vertex { Id = 5 }).ToList();
-            Assert.IsTrue(pathFrom5.Select(x => x.Id).Distinct().Count() == pathFrom5.Count(), "unique vertex ids from 5");
-            Assert.AreEqual(graph.Vertices.Count(), pathFrom5.Count(), "all vertices found from 5");
+            Assert.IsTrue(pathFrom5.Select(x => x.Id).Distinct().Count() == pathFrom5.Count, "unique vertex ids from 5");
+            Assert.AreEqual(graph.Vertices.Count(), pathFrom5.Count, "all vertices found from 5");
 
             i = 0;
             Assert.AreEqual(5, pathFrom5[i].Id, $"path elem number {i++} from 5");
@@ -201,11 +201,11 @@ namespace Graphs.Model.Test
             Assert.AreEqual(4, pathFrom5[i].Id, $"path elem number {i++} from 5");
 
             var pathFrom10 = graph.BreadthFirstSearch(new Vertex { Id = 10 }).ToList();
-            Assert.IsTrue(pathFrom10.Select(x => x.Id).Distinct().Count() == pathFrom10.Count(), "unique vertex ids from 10");
-            Assert.AreEqual(graph.Vertices.Count(), pathFrom10.Count(), "all vertices found from 10");
+            Assert.IsTrue(pathFrom10.Select(x => x.Id).Distinct().Count() == pathFrom10.Count, "unique vertex ids from 10");
+            Assert.AreEqual(graph.Vertices.Count(), pathFrom10.Count, "all vertices found from 10");
 
             var pathFrom11 = graph.BreadthFirstSearch(new Vertex { Id = 11 }).ToList();
-            Assert.AreEqual(1, pathFrom11.Count(), "one vertex found from 11");
+            Assert.AreEqual(1, pathFrom11.Count, "one vertex found from 11");
 
         }
     }

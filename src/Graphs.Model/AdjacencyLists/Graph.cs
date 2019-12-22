@@ -4,11 +4,14 @@ using System.Linq;
 
 namespace Graphs.Model.AdjacencyLists
 {
-
+    /// <summary>
+    /// Граф на основе списков смежности
+    /// </summary>
     public class Graph : IGraph
     {
         private readonly Dictionary<int, AdjacencyVertex> _vertices;
         private readonly Dictionary<int, AdjacencyEdge> _edges;
+ 
         public Graph(EdgeDirectionType directionType = EdgeDirectionType.Undirected)
         {
             DirectionType = directionType;
@@ -19,6 +22,25 @@ namespace Graphs.Model.AdjacencyLists
         /// <inheritdoc/>
         public EdgeDirectionType DirectionType { get; }
 
+        /// <inheritdoc/>
+        public IEnumerable<Vertex> GetOutCommingVertices(Vertex vertex)
+        {
+            if (!_vertices.ContainsKey(vertex.Id))
+                throw new ArgumentException("Vertex not exists");
+
+            return _vertices[vertex.Id].OutComming.Select(x => x.To.Vertex);
+        }
+
+        /// <inheritdoc/>
+        public IEnumerable<Vertex> GetInCommingVertices(Vertex vertex)
+        {
+            if (!_vertices.ContainsKey(vertex.Id))
+                throw new ArgumentException("Vertex not exists");
+
+            return _vertices[vertex.Id].InComming.Select(x => x.From.Vertex);
+        }
+
+        /// <inheritdoc/>
         public IEnumerable<KeyValuePair<int, int>> GetClosestPaths(Vertex start)
         {
             if (!_vertices.ContainsKey(start.Id))
@@ -89,6 +111,13 @@ namespace Graphs.Model.AdjacencyLists
         }
 
         #region IGraphBuilder Implementation
+
+        /// <inheritdoc/>
+        public void Clear()
+        {
+            _edges.Clear();
+            _vertices.Clear();
+        }
 
         /// <inheritdoc/>
         public IEnumerable<Vertex> Vertices => _vertices.Values.Select(x => x.Vertex);
